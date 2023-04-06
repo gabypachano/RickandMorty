@@ -36,7 +36,7 @@ function App() {
          window.alert('Dude, tu numero de ID debe estar entre 1 y 826');
          return;
       }
-      axios(`https://rickandmortyapi.com/api/character/${id}`).then(({ data }) => {
+      axios(`http://localhost:3001/rickandmorty/character/${id}`).then(({ data }) => {
          if (data.name && !characters.find((char) => char.id === data.id)) {
             setCharacters((oldChars) => [...oldChars, data]);
          } else {
