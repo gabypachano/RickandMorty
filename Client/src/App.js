@@ -8,6 +8,7 @@ import { Routes, Route, useLocation, useNavigate} from "react-router-dom"
 import About from './components/About';
 import Detail from './components/Detail';
 import Form from './components/Form';
+import Error from './components/Error';
 
 function App() {
    const [characters, setCharacters] = useState([])
@@ -24,6 +25,12 @@ function App() {
          navigate('/home');
       }
    }
+
+   const logout = () => {
+      setAccess(false)
+   }
+
+   
    
    useEffect(() => {
       !access && navigate('/') // eslint-disable-line react-hooks/exhaustive-deps
@@ -31,7 +38,10 @@ function App() {
    
    
 
-   const onSearch = (id) => {
+   const onSearch = (id, random) => {
+
+      if(random) id = Math.floor(Math.random() * 827) + 1
+
       if (id < 1 || id > 826) {
          window.alert('Dude, tu numero de ID debe estar entre 1 y 826');
          return;
@@ -43,6 +53,7 @@ function App() {
          } else {
             window.alert('Oh! Oh! Estas intentando agregar una card repetida');
          }
+         
       });
    }
 
@@ -56,13 +67,15 @@ function App() {
 
 return (
       <div className='App'>
-         {location.pathname === '/' ? <Form login={login} /> : <Nav onSearch={onSearch}/>}
+         <Nav onSearch={onSearch} logout={logout} />
          
          <Routes>
+            <Route path="/" element ={<Form login={login} />} />
             <Route path="/home" 
             element={<Cards onClose={onClose} characters={characters}/>} />
             <Route path="/about" element={<About/>} />
             <Route path="/detail/:id" element={<Detail/>} />
+            <Route path="*" element={<Error/>} />
          </Routes>
       </div>
    );
