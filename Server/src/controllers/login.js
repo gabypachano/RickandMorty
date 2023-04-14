@@ -1,11 +1,11 @@
-const users = require("../utils/users");
+const users = require("../utils/users")
 
 const login = (req, res) => {
 const {email, password} = req.query
 
-const users = users.find(user => user.email === email && user.password === password)
+const usernames = users.find(user => user.email === email && user.password === password)
 
-if(users) {
+if(usernames) {
     return res.status(200).json({access: true})
 } else {
     return res.status(200).json({access: false})
